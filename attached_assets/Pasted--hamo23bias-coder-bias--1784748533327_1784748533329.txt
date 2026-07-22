@@ -1,0 +1,21 @@
+اسم المستودع: hamo23bias-coder/bias
+خلفية المشروع:
+هذا موقع شخصي (بورتفوليو وخدمات تحليل بيانات وتطوير) مبني بـ React/Vite، منشور على GitHub Pages على:
+https://hamo23bias-coder.github.io/bias/
+تم بناء نظام باك إند كامل (Node.js/Express) يشمل: تسجيل دخول (JWT Auth)، إدارة العملاء المحتملين (Leads)، إدارة المدونة (Blog)، إدارة البورتفوليو، تحليلات (Analytics)، وواجهة AI Studio. كود الباك إند موجود في artifacts/api-server. كما تم بناء واجهة إدارة رسومية (Admin Dashboard) بنفس هوية الموقع البصرية (ألوان navy/gold/ice، خط Tajawal)، منشورة على:
+https://hamo23bias-coder.github.io/bias/admin/login
+قاعدة البيانات مستضافة على Supabase (PostgreSQL) وتحتوي فعليًا على الجداول المطلوبة (admin_users, leads, portfolio_items, blog_posts, page_views, api_keys, project_requests).
+المشكلة الحالية:
+نحاول نشر الباك إند (api-server) على Vercel لربطه بالموقع المنشور (عبر متغير VITE_API_URL في GitHub Secrets). حاولنا سابقًا Render (يطلب بطاقة ائتمان غير متوفرة لدي) وKoyeb (تمر بعملية استحواذ حاليًا)، واستقر القرار على Vercel.
+فشل آخر نشر على Vercel بأخطاء TypeScript في artifacts/api-server/src/app.ts تتعلق بـ:
+مسارات استيراد نسبية بدون امتدادات ملفات صريحة (مطلوبة بسبب إعداد moduleResolution: node16/nodenext)
+أخطاء متتالية ناتجة عن ذلك في تحليل الأنواع (types) الخاصة بـ express وpino-http
+معاملات (parameters) بدون تحديد نوع صريح (implicit any)
+كما كانت هناك مشكلة سابقة تم حلها تتعلق بتعارض بين zod v3 (المثبت) وzod/v4 (المستورد في بعض ملفات @workspace/db)، وتم حلها بإزالة الاعتماد على drizzle-zod واستخدام أنواع Drizzle الأصلية بدلاً منه.
+المطلوب منك الآن:
+افحص المستودع بالكامل، خاصة artifacts/api-server/src/app.ts وملفات @workspace/db و@workspace/api-zod، وملف vercel.json.
+أصلح جميع أخطاء TypeScript المتعلقة بمسارات الاستيراد والأنواع، وتأكد أن pnpm typecheck يعمل بدون أي أخطاء في كامل الـ monorepo.
+تأكد من أن إعدادات النشر على Vercel (vercel.json، أوامر البناء والتشغيل) صحيحة لهذا المشروع (monorepo يستخدم pnpm workspaces).
+أعد محاولة النشر على Vercel وتأكد من نجاحه الكامل.
+بعد نجاح النشر، أخبرني برابط Vercel النهائي (شكله مثل https://bias-xxxx.vercel.app) حتى أتمكن من إضافته كـ VITE_API_URL في GitHub Secrets وإتمام الربط النهائي مع الواجهة الأمامية.
+لا تُجرِ أي تغييرات على التصميم أو الألوان أو الهيكل المرئي للموقع أو للوحة التحكم أثناء هذا الإصلاح — التركيز فقط على إصلاح مشاكل البناء والنشر التقنية.

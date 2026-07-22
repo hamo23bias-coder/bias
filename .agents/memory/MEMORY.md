@@ -1,0 +1,1 @@
+- [Vercel deployment setup](vercel-deploy.md) — Pre-build approach (esbuild→dist/app.mjs) fixes Vercel TS errors; drizzle-zod removed; use InferInsertModel instead.

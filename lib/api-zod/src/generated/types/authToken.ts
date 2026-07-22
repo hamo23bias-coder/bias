@@ -5,7 +5,9 @@
  * Bias Tech Platform API
  * OpenAPI spec version: 0.2.0
  */
+import type { AdminUser } from './adminUser';
 
-export interface HealthStatus {
-  status: string;
+export interface AuthToken {
+  token: string;
+  user: AdminUser;
 }

@@ -1,5 +1,7 @@
 import app from "./app";
 import { logger } from "./lib/logger";
+import { startCronJobs } from "./lib/cron";
+import { seedAdminUser } from "./lib/seed";
 
 const rawPort = process.env["PORT"];
 
@@ -15,11 +17,17 @@ if (Number.isNaN(port) || port <= 0) {
   throw new Error(`Invalid PORT value: "${rawPort}"`);
 }
 
-app.listen(port, (err) => {
+app.listen(port, async (err) => {
   if (err) {
     logger.error({ err }, "Error listening on port");
     process.exit(1);
   }
 
   logger.info({ port }, "Server listening");
+
+  // Seed default admin user if no admins exist
+  await seedAdminUser();
+
+  // Start background cron jobs
+  startCronJobs();
 });

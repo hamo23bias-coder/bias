@@ -5,7 +5,8 @@
  * Bias Tech Platform API
  * OpenAPI spec version: 0.2.0
  */
+import type { ListLeadsStatus } from './listLeadsStatus';
 
-export interface HealthStatus {
-  status: string;
-}
+export type ListLeadsParams = {
+status?: ListLeadsStatus;
+};

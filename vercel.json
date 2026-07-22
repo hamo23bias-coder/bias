@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "installCommand": "pnpm install --no-frozen-lockfile",
+  "buildCommand": "pnpm run typecheck:libs && pnpm --filter @workspace/api-server run build",
+  "functions": {
+    "api/index.mjs": {
+      "maxDuration": 30,
+      "includeFiles": "artifacts/api-server/dist/**"
+    }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/index" }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
